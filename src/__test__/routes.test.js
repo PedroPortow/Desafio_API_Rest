@@ -26,22 +26,22 @@ describe('=====TESTING ROUTES======',() => {
 	
 	it('GET /markers/id => return specific marker', async () => {
 		await request(app)
-		.get(`/markers/${id}`)
-		.expect(200)
-		.then((response) => {
-			expect(response.body).toEqual(
-				expect.objectContaining({
-          position: {
-            lat: expect.any(Number),
-            lng: expect.any(Number)
-          },
-          _id: expect.anything(),
-          createdAt: expect.anything(),
-          updatedAt: expect.anything(),
-          __v: expect.anything()
-				})
-			)
-		})
+      .get(`/markers/${id}`)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            position: {
+              lat: expect.any(Number),
+              lng: expect.any(Number)
+            },
+            _id: expect.anything(),
+            createdAt: expect.anything(),
+            updatedAt: expect.anything(),
+            __v: expect.anything()
+          })
+        )
+      })
 	})
 
 		
@@ -53,72 +53,71 @@ describe('=====TESTING ROUTES======',() => {
 
 
 	it('POST /markers => create marker if required fields are specified correctly', async () => {
-		 await request(app)
-		 	.post("/markers")
-			.send({
-				position: {
-					lat: 123,
-					lng: 311
-				}
-			})
-			.expect('Content-Type', /json/)
-			.expect(201)
-			.then((response) => {
-				expect(response.body).toEqual(
-					expect.objectContaining({
-						__v: expect.anything(),
-						_id: expect.anything(),
-						createdAt: expect.anything(),
-						position: {
-							lat: 123,
-							lng: 311
-						},
-						updatedAt: expect.anything(),
-					})
-				)
-			})
-		
+    await request(app)
+      .post("/markers")
+      .send({
+        position: {
+          lat: 123,
+          lng: 311
+        }
+      })
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            __v: expect.anything(),
+            _id: expect.anything(),
+            createdAt: expect.anything(),
+            position: {
+              lat: 123,
+              lng: 311
+            },
+            updatedAt: expect.anything(),
+          })
+        )
+      })
 	})
 
 	it('POST /markers => return 500 if any of the required fields are missing', async () => {
-		 await request(app)
-		 	.post("/markers")
-			.send({
-				lat: 123,
-			})
-			.expect('Content-Type', /json/)
-			.expect(500)
+    await request(app)
+      .post("/markers")
+      .send({
+        lat: 123,
+      })
+      .expect('Content-Type', /json/)
+      .expect(500)
 	})
 	
 	it('PUT /markers/id => update specified marker', async () => {
 		await request(app)
-		.put(`/markers/${id}`)
-		.send({
-      position: {
-        lat: 123,
-        lng: 311
-      }
-		})
-		.expect("Content-Type", /json/)
-		.expect(200)
-		.then((response) => {
-			expect(response.body).toEqual(
-				expect.objectContaining({
-					"message": "Marker updated successfully"
-				})
-			)
-		})
+      .put(`/markers/${id}`)
+      .send({
+        position: {
+          lat: 123,
+          lng: 311
+        }
+      })
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            "message": "Marker updated successfully"
+          })
+        )
+      })
 	})
 
 	it('PUT /markers/id => return 500 if invalid ID', async () => {
 		await request(app)
-		.put("/markers/invalidId")
-		.send({
-			lat: 777,
-			lng: 777
-		})
-		.expect("Content-Type", /json/)
-		.expect(500)
+      .put("/markers/invalidId")
+      .send({
+        lat: 777,
+        lng: 777
+      })
+      .expect("Content-Type", /json/)
+      .expect(500)
 	})
 
 
@@ -164,8 +163,8 @@ describe('=====TESTING ROUTES======',() => {
 })
 
 
-afterAll(done => {
-  // Closing the DB connection allows Jest to exit successfully.
-  mongoose.connection.close()
-  done()
-})
+// afterAll(done => {
+//   // Closing the DB connection allows Jest to exit successfully.
+//   mongoose.connection.close()
+//   done()
+// })
