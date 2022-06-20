@@ -1,11 +1,10 @@
 import express from "express";
 import db from "./config/dbConnect.js"
-import markers from "./models/Marker.js"
 import routes from "./routes/index.js"
 
-db.on("error", console.log.bind(console, "Problema na conexão com o banco"))
+db.on("error", console.log.bind(console, "Error connecting to the Database"))
 db.once("open", () => {
-  console.log("Conexão com o banco feita com sucesso")
+  console.log("Successful connection with the Database")
 })
 
 const app = express();

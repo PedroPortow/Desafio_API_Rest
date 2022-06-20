@@ -11,7 +11,7 @@ class MarkerController{
     const id = req.params.id
     markers.findById(id).exec((err, markers) => {
       if(err){
-        res.status(400).send({message: `${err.message} - ID do marcardor não localizado`})
+        res.status(400).send({message: `${err.message} - ID not found`})
       }
       else{
           res.status(200).send(markers)
@@ -24,7 +24,7 @@ class MarkerController{
     
     marker.save((err) => {
       if(err){
-        res.status(500).send({message: `${err.message} - Falha ao cadastrar marcador `})
+        res.status(500).send({message: `${err.message} - Error adding new marker`})
       }
       else{
         res.status(201).send(marker.toJSON())
@@ -36,10 +36,10 @@ class MarkerController{
 
     markers.remove({}, (err) => {
       if(!err){
-        res.status(200).send({message: `Todos marcadores excluídos com sucesso`})
+        res.status(200).send({message: `All the markers were removed successfully`})
       }
       else{
-          res.status(500).send({message: err.message} - 'Erro ao excluir todos marcadores')
+          res.status(500).send({message: err.message} - 'Error removing all markers')
       }
     })
   }
@@ -48,7 +48,7 @@ class MarkerController{
     const id = req.params.id
     markers.findByIdAndDelete(id, (err) => {
       if(!err){
-        res.status(200).send({message: `Marcador excluído com sucesso`})
+        res.status(200).send({message: `Marker removed sucessfully`})
       }
       else{
           res.status(500).send({message: err.message})
@@ -61,10 +61,10 @@ class MarkerController{
 
     markers.findByIdAndUpdate(id, {$set: req.body}, (err) => {
         if(!err){
-          res.status(200).send({message: "Marcador atualizado com sucesso"})
+          res.status(200).send({message: "Marker updated successfully"})
         }
         else{
-            res.status(500).send({message: `${err.message} - Erro para atualização de marcador`})
+            res.status(500).send({message: `${err.message} - Error updating marker`})
         }
     })
 }

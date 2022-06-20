@@ -2,12 +2,10 @@ import request from 'supertest'
 import mongoose from 'mongoose'
 import app from '../app.js'
 
-const id = '62aba412fadb407988a88a9c'
+const id = '62afcbe49377673da24424bf'
 
+describe('=====TESTING ROUTES======',() => {
 
-describe('Testing Routes',() => {
-
-	
 	it('GET /markers => return array markers', async () => {
 		await request(app)
 			.get("/markers")
@@ -29,13 +27,18 @@ describe('Testing Routes',() => {
 	it('GET /markers/id => return specific marker', async () => {
 		await request(app)
 		.get(`/markers/${id}`)
-		.expect("Content-Type", /json/)
 		.expect(200)
 		.then((response) => {
 			expect(response.body).toEqual(
 				expect.objectContaining({
-					lat: expect.any(Number),
-					lng: expect.any(Number)
+          position: {
+            lat: expect.any(Number),
+            lng: expect.any(Number)
+          },
+          _id: expect.anything(),
+          createdAt: expect.anything(),
+          updatedAt: expect.anything(),
+          __v: expect.anything()
 				})
 			)
 		})
@@ -53,8 +56,10 @@ describe('Testing Routes',() => {
 		 await request(app)
 		 	.post("/markers")
 			.send({
-				lat: 123,
-				lng: 311
+				position: {
+					lat: 123,
+					lng: 311
+				}
 			})
 			.expect('Content-Type', /json/)
 			.expect(201)
@@ -64,8 +69,10 @@ describe('Testing Routes',() => {
 						__v: expect.anything(),
 						_id: expect.anything(),
 						createdAt: expect.anything(),
-						lat: 123,
-						lng: 311,
+						position: {
+							lat: 123,
+							lng: 311
+						},
 						updatedAt: expect.anything(),
 					})
 				)
@@ -87,15 +94,17 @@ describe('Testing Routes',() => {
 		await request(app)
 		.put(`/markers/${id}`)
 		.send({
-			lat: 777,
-			lng: 777
+      position: {
+        lat: 123,
+        lng: 311
+      }
 		})
 		.expect("Content-Type", /json/)
 		.expect(200)
 		.then((response) => {
 			expect(response.body).toEqual(
 				expect.objectContaining({
-					"message": "Marcador atualizado com sucesso"
+					"message": "Marker updated successfully"
 				})
 			)
 		})
