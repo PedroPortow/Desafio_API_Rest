@@ -6,43 +6,45 @@ const id = '62afcbe49377673da24424bf'
 
 describe('=====TESTING ROUTES======',() => {
 
-	it('GET /markers => return array markers', async () => {
-		await request(app)
-			.get("/markers")
-			.expect("Content-Type", /json/)
-			.expect(200)
-			.then((response) => {
-				expect(response.body).toEqual(
-					expect.arrayContaining([
-						expect.objectContaining({
-							lat: expect.any(Number),
-							lng: expect.any(Number)
-						})
-					])
-				)
-			})
-	})
+      it('GET /markers => return array markers', async () => {
+        await request(app)
+          .get("/markers")
+          .expect("Content-Type", /json/)
+          .expect(200)
+          .then((response) => {
+            expect(response.body).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining({
+                  position: {
+                    lat: expect.any(Number),
+                    lng: expect.any(Number)
+                  },
+                })
+              ])
+            )
+        })
+      })
 
 	
-	it('GET /markers/id => return specific marker', async () => {
-		await request(app)
-      .get(`/markers/${id}`)
-      .expect(200)
-      .then((response) => {
-        expect(response.body).toEqual(
-          expect.objectContaining({
-            position: {
-              lat: expect.any(Number),
-              lng: expect.any(Number)
-            },
-            _id: expect.anything(),
-            createdAt: expect.anything(),
-            updatedAt: expect.anything(),
-            __v: expect.anything()
-          })
-        )
+    it('GET /markers/id => return specific marker', async () => {
+      await request(app)
+        .get(`/markers/${id}`)
+        .expect(200)
+        .then((response) => {
+          expect(response.body).toEqual(
+            expect.objectContaining({
+              position: {
+                lat: expect.any(Number),
+                lng: expect.any(Number)
+              },
+              _id: expect.anything(),
+              createdAt: expect.anything(),
+              updatedAt: expect.anything(),
+              __v: expect.anything()
+            })
+          )
       })
-	})
+    })
 
 		
 	it('GET /markers/id => return 400 if invalid ID', async () => {
